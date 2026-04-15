@@ -5,22 +5,35 @@ import java.util.*;
 public class CPUScheduler {
     public static void main(String[] args) {
         if (args.length < 2) {
-            System.out.println("Usage: java CPUScheduler <datafile.txt> <FIFO|SJF>");
+            System.out.println("Usage: java CPUScheduler <inputfile.txt> <FIFO|SJF>");
             return;
         }
+
         String fileName = args[0];
         String algo = args[1].toUpperCase();
         boolean isFIFO = algo.equals("FIFO");
+
         if (!isFIFO && !algo.equals("SJF")) {
             System.out.println("Invalid algorithm. Use FIFO or SJF.");
             return;
         }
 
         List<Process> processes = readProcesses(fileName);
-        if (processes.size() != 500) {
-            System.out.println("Warning: Expected 500 processes, got " + processes.size());
+        if (processes.isEmpty()) {
+            System.out.println("No processes found in file.");
+            return;
         }
-        simulate(processes, isFIFO);
+
+        String outputFile = "output_" + (isFIFO ? "FIFO" : "SJF") + ".txt";
+
+        try (PrintStream out = new PrintStream(new FileOutputStream(outputFile))) {
+            System.setOut(out);
+            simulate(processes, isFIFO);
+        } catch (Exception e) {
+            System.err.println("Error writing " + outputFile);
+        }
+
+        System.out.println("Results saved to: " + outputFile);   // printed to console
     }
 
     private static List<Process> readProcesses(String fileName) {

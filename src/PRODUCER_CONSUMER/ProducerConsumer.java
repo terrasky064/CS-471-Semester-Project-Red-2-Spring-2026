@@ -1,4 +1,6 @@
 package PRODUCER_CONSUMER;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -20,10 +22,21 @@ public class ProducerConsumer {
 
         for (int p : ps) {
             for (int c : cs) {
-                System.out.println("\n=== RUN p=" + p + " c=" + c + " b=" + b + " ===");
-                runOneSimulation(p, c, b);
+                String runName = "p" + p + "_c" + c + "_b" + b;
+                String outputFile = "output_" + runName + ".txt";
+
+                try (PrintStream out = new PrintStream(new FileOutputStream(outputFile))) {
+                    System.setOut(out);
+                    System.out.println("=== RUN " + runName + " ===");
+                    runOneSimulation(p, c, b);
+                    System.out.println("=== END OF RUN " + runName + " ===\n");
+                } catch (Exception e) {
+                    System.err.println("Error writing " + outputFile);
+                }
             }
         }
+
+        System.out.println("All 9 runs completed. Check the output_*.txt files.");
     }
     // This method runs a single simulation of the producer-consumer problem with the specified number of producers (p), consumers (c), and buffer capacity (b). It initializes the shared buffer, starts the producer and consumer threads, and waits for them to finish. After all threads have completed their work, it prints the global statistics, including total sales for each store, total sales for each month, aggregate sales, and total time taken for the simulation.
     private static void runOneSimulation(int p, int c, int b) {
