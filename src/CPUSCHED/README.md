@@ -1,13 +1,15 @@
 CPUSCHED - CPU Scheduling Simulator (Java)
 
+Commands are run from parent folder src
 Compile:
-javac Process.java CPUScheduler.java
+del CPUSCHED\*.class
+javac CPUSCHED\Process.java CPUSCHED\CPUScheduler.java CPUSCHED\GenerateData.java
 
 Run (FIFO):
-java CPUScheduler datafile.txt FIFO
+java CPUSCHED.CPUScheduler CPUSCHED\Datafile1-txt.txt FIFO
 
 Run (SJF non-preemptive):
-java CPUScheduler datafile.txt SJF
+java CPUSCHED.CPUScheduler CPUSCHED\Datafile1-txt.txt SJF
 
 Sample input: datafile.txt (500 processes, format: arrival burst per line)
 Sample output: printed directly to console (copy to sample_output_FIFO.txt / sample_output_SJF.txt after running)

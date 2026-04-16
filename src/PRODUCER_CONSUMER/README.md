@@ -1,10 +1,11 @@
 PRODUCER-CONSUMER - Java multi-threaded solution
 
 Compile:
-javac *.java
+del PRODUCER_CONSUMER\*.class
+javac PRODUCER_CONSUMER\BoundedBuffer.java PRODUCER_CONSUMER\ProducerConsumer.java PRODUCER_CONSUMER\SalesRecord.java
 
 Run one combination:
-java ProducerConsumer 2 2 10
+java PRODUCER_CONSUMER.ProducerConsumer 2 2 10
 
 Runs ALL 9 combinations automatically when you run the main (p=2/5/10, c=2/5/10, b=10).
 
